@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial;
+        }
+        body{
+            background:#f5f5f5;
+        }
+        nav{
+            width:100%;
+            background:#14532d;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px 8%;
+        }
+        .logo-area{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+
+        .logo-area img{
+            width:45px;
+        }
+        .logo-area h2{
+            color:white;
+        }
+        .menu a{
+            color:white;
+            text-decoration:none;
+            margin-left:20px;
+            padding:10px 20px;
+            border-radius:10px;
+            font-size:18px;
+        }
+        .menu a:hover,
+        .active{
+            background:#22c55e;
+        }
+        .container{
+            width:92%;
+            margin:35px auto;
+            background:white;
+            border-radius:25px;
+            padding:45px;
+            min-height:78vh;
+
+        }
+        .container h1{
+            text-align:center;
+            color:#14532d;
+            margin-bottom:30px;
+            font-size:48px;
+        }
+        .container p{
+            font-size:20px;
+            color:#555;
+            line-height:1.8;
+            text-align:justify;
+            margin-bottom:35px;
+        }
+        .container ul{
+            list-style:none;
+        }
+        .container li{
+            background:#f0fdf4;
+            border-left:8px solid #22c55e;
+            padding:20px;
+            border-radius:15px;
+            margin-bottom:20px;
+            font-size:18px;
+            color:#444;
+            line-height:1.8;
+        }
+        .container li b{
+            color:#14532d;
+            font-size:22px;
+        }
+
+        @media(max-width:768px){
+            .container{
+                padding:30px;
+                min-height:auto;
+            }
+            .container h1{
+                font-size:36px;
+            }
+            .container p,
+            .container li{
+                font-size:17px;
+            }
+        }
+        @media(max-width:768px){
+            nav{
+                flex-direction:column;
+                gap:20px;
+            }
+
+            .container{
+                padding:25px;
+            }
+
+            .container h1{
+                font-size:30px;
+            }
+            .container p,
+            .container li{
+                font-size:16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo-area">
+            <img src="{{ url_for('static', filename='Logo Sawit.png') }}">
+            <h2>Sistem Deteksi Kematangan Sawit</h2>
+        </div>
+        <div class="menu">
+            <a href="/">Beranda</a>
+            <a href="/deteksi">Deteksi</a>
+            <a href="/tentang" class="active">Tentang</a>
+        </div>
+    </nav>
+    <div class="container">
+        <h1>Tentang Sistem</h1>
+        <p>
+            Sistem ini dirancang untuk membantu proses identifikasi tingkat 
+            kematangan buah kelapa sawit secara otomatis menggunakan teknologi 
+            <i>Convolutional Neural Network</i> (CNN). Pengguna hanya perlu 
+            mengunggah gambar buah sawit, kemudian sistem akan melakukan 
+            analisis dan mengklasifikasikan tingkat kematangan buah secara 
+            cepat dan akurat. Berikut merupakan kategori beserta ciri-ciri 
+            tingkat kematangan buah kelapa sawit:
+        </p>
+        <ul>
+            <li>
+                <b>Belum Masak</b><br>
+                Warna buah cenderung hitam atau ungu gelap, permukaan buah 
+                masih keras, dan jumlah brondolan yang jatuh masih sangat 
+                sedikit atau belum ada.
+            </li>
+            <li>
+                <b>Masak</b><br>
+                Warna buah berubah menjadi merah keoranyean, tekstur buah 
+                lebih segar, serta mulai terdapat brondolan yang jatuh 
+                dari tandan.
+            </li>
+            <li>
+                <b>Terlalu Masak</b><br>
+                Warna buah tampak merah tua hingga kecokelatan, banyak 
+                brondolan yang telah lepas dari tandan, dan kondisi buah 
+                mulai mengalami penurunan kualitas.
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

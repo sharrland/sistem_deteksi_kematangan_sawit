@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Deteksi Kematangan Sawit</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial;
+        }
+        body{
+            background:#f5f5f5;
+        }
+
+        /*  NAVBAR  */
+        nav{
+            width:100%;
+            background:#14532d;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px 8%;
+        }
+        .logo-area{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+        .logo-area img{
+            width:45px;
+        }
+        .logo-area h2{
+            color:white;
+        }
+        .menu a{
+            color:white;
+            text-decoration:none;
+            margin-left:20px;
+            padding:10px 20px;
+            border-radius:10px;
+            font-size:18px;
+        }
+        .menu a:hover,
+        .active{
+            background:#22c55e;
+        }
+
+        /*  HERO CONTAINER  */
+        .container{
+            width:92%;
+            margin:35px auto;
+            background:white;
+            border-radius:25px;
+            padding:45px;
+            min-height:78vh;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:40px;
+            flex-wrap:wrap;
+        }
+
+        /*  TEXT  */
+        .text{
+            flex:1;
+            min-width:300px;
+        }
+        .text h1{
+            font-size:52px;
+            color:#14532d;
+            margin-bottom:22px;
+            line-height:1.2;
+        }
+        .text p{
+            font-size:20px;
+            color:#555;
+            margin-bottom:35px;
+            line-height:1.7;
+        }
+
+        /*  BUTTON  */
+        .btn{
+            background:#22c55e;
+            color:white;
+            text-decoration:none;
+            padding:15px 30px;
+            border-radius:12px;
+            font-size:18px;
+            transition:0.3s;
+        }
+        .btn:hover{
+            background:#15803d;
+        }
+
+        /*  IMAGE  */
+        .image{
+            flex:1;
+            text-align:center;
+            min-width:300px;
+        }
+        .image img{
+            width:100%;
+            max-width:420px;
+            border-radius:18px;
+        }
+
+        /*  RESPONSIVE  */
+        @media(max-width:768px){
+            nav{
+                flex-direction:column;
+                gap:18px;
+            }
+            .container{
+                flex-direction:column;
+                text-align:center;
+                padding:30px;
+                min-height:auto;
+            }
+            .text h1{
+                font-size:38px;
+            }
+            .text p{
+                font-size:18px;
+            }
+            .image img{
+                max-width:100%;
+                margin-top:10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!--  NAVBAR  -->
+    <nav>
+        <div class="logo-area">
+            <img src="{{ url_for('static', filename='Logo Sawit.png') }}">
+            <h2>Sistem Deteksi Kematangan Sawit</h2>
+        </div>
+        <div class="menu">
+            <a href="/" class="active">Beranda</a>
+            <a href="/deteksi">Deteksi</a>
+            <a href="/tentang">Tentang</a>
+        </div>
+    </nav>
+
+    <!--  HERO SECTION  -->
+    <div class="container">
+
+        <!-- Text -->
+        <div class="text">
+            <h1>
+                Deteksi Tingkat
+                Kematangan
+                Buah Sawit
+            </h1>
+            <p>
+                Sistem berbasis Convolutional Neural Network (CNN)
+                untuk membantu mendeteksi tingkat kematangan
+                buah kelapa sawit secara otomatis.
+            </p>
+            <a href="/deteksi" class="btn">
+                Mulai Deteksi
+            </a>
+        </div>
+
+        <!-- Image -->
+        <div class="image">
+            <img src="{{ url_for('static', filename='Sawit Wall.jpg') }}">
+        </div>
+    </div>
+</body>
+</html>
