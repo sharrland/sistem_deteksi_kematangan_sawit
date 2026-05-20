@@ -33,9 +33,3 @@ pip install -r requirements.txt
 ```bash
 python app.py
 ```
-
-### Buka Browser
-
-```text
-http://127.0.0.1:5000
-```
