@@ -1,0 +1,329 @@
+/* CONTAINER */
+.container{
+    width:92%;
+    margin:35px auto;
+}
+
+.container h1{
+    text-align:center;
+    color:#14532d;
+    margin-bottom:35px;
+    font-size:38px;
+}
+
+/* MAIN CARD */
+.main-card{
+    background:white;
+    border-radius:25px;
+    padding:40px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+/* UPLOAD */
+.upload-section{
+    border:3px dashed #22c55e;
+    border-radius:20px;
+    padding:40px;
+    text-align:center;
+}
+
+.upload-icon{
+    font-size:60px;
+    margin-bottom:20px;
+}
+
+.upload-section h3{
+    color:#14532d;
+    font-size:28px;
+}
+
+.upload-section p{
+    color:#666;
+    margin-bottom:20px;
+}
+
+.file-input{
+    display:none;
+}
+
+.upload-btn{
+    background:#22c55e;
+    color:white;
+    border:none;
+    padding:15px 30px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+.upload-btn:hover{
+    background:#15803d;
+}
+
+/* FILE INFO */
+.file-info{
+    display:none;
+    margin-top:25px;
+    background:#f0fdf4;
+    padding:20px;
+    border-radius:15px;
+    position:relative;
+}
+
+.file-detail{
+    margin-bottom:8px;
+}
+
+/* BUTTON X */
+.remove-btn{
+    position:absolute;
+    top:10px;
+    right:10px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:red;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+/* PREVIEW */
+.preview-image{
+    width:100%;
+    max-width:280px;
+    margin-top:20px;
+}
+
+/* BUTTON ANALISIS */
+.predict-btn{
+    margin-top:25px;
+    width:100%;
+    background:#14532d;
+    color:white;
+    padding:16px;
+    border-radius:15px;
+    font-size:20px;
+    border:none;
+    cursor:pointer;
+}
+
+.predict-btn:hover{
+    background:#22c55e;
+}
+
+/* RESULT CARD */
+.result-card{
+    margin-top:35px;
+    background:white;
+    border-radius:25px;
+    padding:40px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.result-title{
+    text-align:center;
+    font-size:34px;
+    color:#14532d;
+    margin-bottom:25px;
+}
+
+/* GRID harus stretch */
+.result-grid-top{
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:25px;
+    align-items:stretch; 
+}
+
+.inside-card{
+    background:#f9fafb;
+    padding:25px;
+    border-radius:20px;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+}
+
+/* GAMBAR */
+.image-card{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.center-title{
+    text-align:center;
+    width:100%;
+}
+
+.uploaded-image{
+    width:100%;
+    max-width:420px;
+    max-height:380px;
+    object-fit:contain;
+    border-radius:15px;
+}
+
+/* JUDUL SECTION CENTER */
+.section-title{
+    text-align:center;
+    font-size:24px;
+    color:#14532d;
+    margin-bottom:20px;
+    font-weight:600;
+}
+
+/* INFO CARD (NETRAL) */
+.info-title{
+    text-align:center;
+    font-size:24px;
+    color:#14532d;
+    margin-bottom:20px;
+}
+
+
+/* BOX STATUS */
+.prediction-box{
+    background:#f0fdf4;
+    border-radius:18px;
+    padding:30px;
+    text-align:center;
+
+    flex:1; 
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.prediction-icon{
+    font-size:55px;
+    margin-bottom:10px;
+}
+
+.prediction-text{
+    font-size:32px;
+    font-weight:bold;
+    color:#14532d;
+    margin-bottom:10px;
+}
+
+.confidence-text{
+    font-size:20px;
+    color:#444;
+}
+
+
+/* KETERANGAN (NO CARD) */
+.description-section{
+    margin-top:25px;
+    padding:10px 5px;
+}
+
+.desc-title{
+    font-size:24px;
+    color:#14532d;
+    margin-bottom:10px;
+    text-align:left;
+}
+
+.desc-text{
+    font-size:18px;
+    color:#333;
+    line-height:1.7;
+    text-align:left;
+
+    background:#f0fdf4;   
+    padding:20px;
+    border-radius:15px;
+}
+
+/* CARD ANALISIS GLCM */
+.glcm-card{
+    margin-top:30px;
+    background:white;
+    border-radius:25px;
+    padding:40px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.glcm-main-title{
+    text-align:center;
+    color:#14532d;
+    font-size:30px;
+    margin-bottom:25px;
+}
+
+.glcm-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.glcm-item{
+    background:#f0fdf4;
+    border-radius:18px;
+    padding:25px;
+    text-align:center;
+    border:1px solid #dcfce7;
+}
+
+.glcm-label{
+    display:block;
+    font-size:18px;
+    font-weight:600;
+    color:#14532d;
+    margin-bottom:10px;
+}
+
+.glcm-value{
+    display:block;
+    font-size:26px;
+    font-weight:bold;
+    color:#222;
+}
+
+/* KETERANGAN GLCM  */
+.glcm-info{
+    margin-top:35px;
+}
+
+.glcm-desc-title{
+    font-size:24px;
+    color:#14532d;
+    margin-bottom:12px;
+    text-align:left;
+}
+
+.glcm-desc-box{
+    background:#f0fdf4;
+    padding:25px;
+    border-radius:15px;
+}
+
+.glcm-desc-box p{
+    margin-bottom:18px;
+    line-height:1.8;
+    color:#333;
+    text-align:justify;
+}
+
+.glcm-desc-box p:last-child{
+    margin-bottom:0;
+}
+
+.glcm-desc-box b{
+    color:#14532d;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+    .result-grid-top{
+        grid-template-columns:1fr;
+    }
+
+    .uploaded-image{
+        max-height:300px;
+    }
+}
