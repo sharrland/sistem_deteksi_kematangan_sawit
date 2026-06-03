@@ -1,168 +1,204 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang</title>
+    <title>Tentang Sistem</title>
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial;
-        }
-        body{
-            background:#f5f5f5;
-        }
-        nav{
-            width:100%;
-            background:#14532d;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:20px 8%;
-        }
-        .logo-area{
-            display:flex;
-            align-items:center;
-            gap:10px;
-        }
-
-        .logo-area img{
-            width:45px;
-        }
-        .logo-area h2{
-            color:white;
-        }
-        .menu a{
-            color:white;
-            text-decoration:none;
-            margin-left:20px;
-            padding:10px 20px;
-            border-radius:10px;
-            font-size:18px;
-        }
-        .menu a:hover,
-        .active{
-            background:#22c55e;
-        }
-        .container{
-            width:92%;
-            margin:35px auto;
-            background:white;
-            border-radius:25px;
-            padding:45px;
-            min-height:78vh;
-
-        }
-        .container h1{
-            text-align:center;
-            color:#14532d;
-            margin-bottom:30px;
-            font-size:48px;
-        }
-        .container p{
-            font-size:20px;
-            color:#555;
-            line-height:1.8;
-            text-align:justify;
-            margin-bottom:35px;
-        }
-        .container ul{
-            list-style:none;
-        }
-        .container li{
-            background:#f0fdf4;
-            border-left:8px solid #22c55e;
-            padding:20px;
-            border-radius:15px;
-            margin-bottom:20px;
-            font-size:18px;
-            color:#444;
-            line-height:1.8;
-        }
-        .container li b{
-            color:#14532d;
-            font-size:22px;
-        }
-
-        @media(max-width:768px){
-            .container{
-                padding:30px;
-                min-height:auto;
-            }
-            .container h1{
-                font-size:36px;
-            }
-            .container p,
-            .container li{
-                font-size:17px;
-            }
-        }
-        @media(max-width:768px){
-            nav{
-                flex-direction:column;
-                gap:20px;
-            }
-
-            .container{
-                padding:25px;
-            }
-
-            .container h1{
-                font-size:30px;
-            }
-            .container p,
-            .container li{
-                font-size:16px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tentang.css') }}">
 </head>
+
 <body>
-    <nav>
-        <div class="logo-area">
-            <img src="{{ url_for('static', filename='Logo Sawit.png') }}">
-            <h2>Sistem Deteksi Kematangan Sawit</h2>
-        </div>
-        <div class="menu">
-            <a href="/">Beranda</a>
-            <a href="/deteksi">Deteksi</a>
-            <a href="/tentang" class="active">Tentang</a>
-        </div>
-    </nav>
-    <div class="container">
-        <h1>Tentang Sistem</h1>
-        <p>
-            Sistem ini dirancang untuk membantu proses identifikasi tingkat 
-            kematangan buah kelapa sawit secara otomatis menggunakan teknologi 
-            <i>Convolutional Neural Network</i> (CNN). Pengguna hanya perlu 
-            mengunggah gambar buah sawit, kemudian sistem akan melakukan 
-            analisis dan mengklasifikasikan tingkat kematangan buah secara 
-            cepat dan akurat. Berikut merupakan kategori beserta ciri-ciri 
-            tingkat kematangan buah kelapa sawit:
-        </p>
-        <ul>
-            <li>
-                <b>Belum Masak</b><br>
-                Warna buah cenderung hitam atau ungu gelap, permukaan buah 
-                masih keras, dan jumlah brondolan yang jatuh masih sangat 
-                sedikit atau belum ada.
-            </li>
-            <li>
-                <b>Masak</b><br>
-                Warna buah berubah menjadi merah keoranyean, tekstur buah 
-                lebih segar, serta mulai terdapat brondolan yang jatuh 
-                dari tandan.
-            </li>
-            <li>
-                <b>Terlalu Masak</b><br>
-                Warna buah tampak merah tua hingga kecokelatan, banyak 
-                brondolan yang telah lepas dari tandan, dan kondisi buah 
-                mulai mengalami penurunan kualitas.
-            </li>
-        </ul>
+
+<!-- NAVBAR -->
+<nav>
+
+    <div class="logo-area">
+        <img src="{{ url_for('static', filename='Logo Sawit.png') }}">
+        <h2>Sistem Deteksi Kematangan Sawit</h2>
     </div>
+
+    <div class="menu">
+
+        <a href="/" class="{% if request.path == '/' %}active{% endif %}">
+            Beranda
+        </a>
+
+        <a href="/deteksi" class="{% if request.path == '/deteksi' %}active{% endif %}">
+            Deteksi
+        </a>
+
+        <a href="/tentang" class="{% if request.path == '/tentang' %}active{% endif %}">
+            Tentang
+        </a>
+
+    </div>
+
+</nav>
+
+<!-- CONTAINER -->
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <h1>Informasi Sistem</h1>
+
+    </div>
+
+    <!-- METODE CNN -->
+    <div class="info-card">
+
+        <h3>Metode</h3>
+
+        <p>
+        <b>Convolutional Neural Network (CNN)</b><br>
+        Menggunakan arsitektur MobileNetV2 untuk mengekstraksi fitur visual citra, seperti warna, bentuk, 
+        dan pola objek secara otomatis guna mengklasifikasikan tingkat kematangan buah kelapa sawit.
+
+        <br><br>
+
+        <b>Gray Level Co-occurrence Matrix (GLCM)</b><br>
+        Mengekstraksi fitur tekstur citra, seperti contrast, dissimilarity, homogeneity, energy, correlation, 
+        dan ASM untuk membantu membedakan karakteristik buah pada setiap tingkat kematangan.
+        </p>
+
+
+    </div>
+   
+
+    <!-- TEKNOLOGI -->
+    <div class="info-card">
+
+        <h3>Teknologi</h3>
+
+        <div class="tech-grid">
+
+            <div class="tech-item">
+                <div class="tech-icon">🐍</div>
+                <div class="tech-name">Python</div>
+                <div class="tech-desc">Bahasa pemrograman utama</div>
+            </div>
+
+            <div class="tech-item">
+                <div class="tech-icon">🤖</div>
+                <div class="tech-name">TensorFlow / Keras</div>
+                <div class="tech-desc">Framework Deep Learning</div>
+            </div>
+
+            <div class="tech-item">
+                <div class="tech-icon">🌐</div>
+                <div class="tech-name">Flask</div>
+                <div class="tech-desc">Framework Website</div>
+            </div>
+
+            <div class="tech-item">
+                <div class="tech-icon">🔬</div>
+                <div class="tech-name">Scikit Image</div>
+                <div class="tech-desc">Ekstraksi fitur GLCM</div>
+            </div>
+
+            <div class="tech-item">
+                <div class="tech-icon">🖼️</div>
+                <div class="tech-name">OpenCV</div>
+                <div class="tech-desc">Computer Vision Library</div>
+            </div>
+
+            <div class="tech-item">
+                <div class="tech-icon">🧮</div>
+                <div class="tech-name">NumPy</div>
+                <div class="tech-desc">Numerical Computing</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ALUR CNN -->
+    <div class="info-card">
+
+        <h3>Alur Kerja Sistem</h3>
+
+        <div class="flow-step">
+            <div class="step-number">1</div>
+            <div>
+                <div class="step-title">Upload Gambar</div>
+                <div class="step-desc">Pengguna mengunggah gambar buah sawit</div>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-number">2</div>
+            <div>
+                <div class="step-title">Ekstraksi Fitur</div>
+                <div class="step-desc">Sistem mengekstraksi karakteristik citra dan fitur tekstur GLCM.</div>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-number">3</div>
+            <div>
+                <div class="step-title">Klasifikasi CNN</div>
+                <div class="step-desc">Sistem menentukan tingkat kematangan buah sawit.</div>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-number">4</div>
+            <div>
+                <div class="step-title">Output Hasil</div>
+                <div class="step-desc">Menampilkan hasil klasifikasi dan nilai fitur GLCM</div>
+            </div>
+        </div>
+
+    </div>
+
+   <!-- FITUR GLCM -->
+    <div class="info-card">
+
+        <h3>Fitur GLCM</h3>
+
+        <div class="tech-grid">
+
+            <div class="tech-item">
+                <div class="tech-name">Contrast</div>
+                <div class="tech-desc">Mengukur perbedaan itensitas lokal</div>
+            </div>
+
+            <div class="tech-item">
+                <div class="tech-name">Dissimilarity</div>
+                <div class="tech-desc">Mengukur ketidakmiripan pixel</div>
+            </div>
+
+            <div class="tech-item">
+                <div class="tech-name">Homogeneity</div>
+                <div class="tech-desc">Mengukur keseragaman tekstur</div>
+            </div>
+
+            <div class="tech-item">
+                <div class="tech-name">Energy</div>
+                <div class="tech-desc">Mengukur keteraturan tekstur</div>
+            </div>
+
+            <div class="tech-item">
+                <div class="tech-name">Correlation</div>
+                <div class="tech-desc">Mengukur korelasi pixel</div>
+            </div>
+
+            <div class="tech-item">
+                <div class="tech-name">ASM</div>
+                <div class="tech-desc">Mengukur kestabilan tekstur</div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</div>
+
 </body>
 </html>

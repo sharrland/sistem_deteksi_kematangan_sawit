@@ -1,482 +1,331 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deteksi Sawit</title>
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial;
-        }
-        body{
-            background:#f5f5f5;
-        }
 
-        /* NAVBAR */
-        nav{
-            width:100%;
-            background:#14532d;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:20px 8%;
-        }
-        .logo-area{
-            display:flex;
-            align-items:center;
-            gap:10px;
-        }
-        .logo-area img{
-            width:45px;
-        }
-        .logo-area h2{
-            color:white;
-        }
-        .menu a{
-            color:white;
-            text-decoration:none;
-            margin-left:20px;
-            padding:10px 20px;
-            border-radius:10px;
-            font-size:18px;
-            transition:0.3s;
-        }
-        .menu a:hover,
-        .active{
-            background:#22c55e;
-        }
-
-        /* CONTAINER  */
-        .container{
-            width:92%;
-            margin:35px auto;
-        }
-        .container h1{
-            text-align:center;
-            color:#14532d;
-            margin-bottom:35px;
-            font-size:38px;
-        }
-
-        /*  CARD  */
-        .card{
-            background:white;
-            border-radius:25px;
-            padding:45px;
-            margin-bottom:35px;
-            min-height:78vh;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-        }
-
-        /* UPLOAD BOX */
-        .upload-box{
-            background:#ecfdf5;
-            border:3px dashed #22c55e;
-            border-radius:25px;
-            min-height:260px;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            padding:30px;
-        }
-
-        /* Icon Upload */
-        .upload-icon{
-            width:75px;
-            height:75px;
-            background:#d1fae5;
-            border-radius:50%;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-size:32px;
-            color:#22c55e;
-            margin-bottom:20px;
-        }
-
-        /* Text */
-        .upload-box h2{
-            color:#666;
-            font-size:22px;
-            margin-bottom:12px;
-            line-height:1.5;
-        }
-        .upload-box p{
-            color:#888;
-            font-size:16px;
-            margin-bottom:25px;
-        }
-
-        /* Hide Input */
-        #imageInput{
-            display:none;
-        }
-
-        /* Upload Button */
-        .upload-btn{
-            background:#22c55e;
-            color:white;
-            padding:14px 30px;
-            border-radius:12px;
-            cursor:pointer;
-            font-size:18px;
-            transition:0.3s;
-        }
-        .upload-btn:hover{
-            background:#15803d;
-        }
-
-        /* Preview File */
-        .file-preview{
-            display:none;
-            align-items:center;
-            gap:12px;
-            background:white;
-            padding:12px 20px;
-            border-radius:15px;
-            margin-top:20px;
-        }
-        .file-name{
-            color:#14532d;
-            font-size:17px;
-            font-weight:bold;
-        }
-
-        /* Remove Button */
-        .remove-btn{
-            background:red;
-            color:white;
-            border:none;
-            width:28px;
-            height:28px;
-            border-radius:50%;
-            cursor:pointer;
-            font-size:16px;
-        }
-
-        /* Detect Button */
-        .detect-btn{
-            display:none;
-            margin-top:25px;
-            background:#22c55e;
-            color:white;
-            border:none;
-            padding:14px 30px;
-            border-radius:12px;
-            font-size:18px;
-            cursor:pointer;
-            transition:0.3s;
-        }
-        .detect-btn:hover{
-            background:#15803d;
-        }
-
-        /*  RESULT CARD  */
-        .result-card{
-            display:none;
-            background:white;
-            border-radius:25px;
-            padding:45px;
-            border:2px solid #14532d;
-            min-height:78vh;
-            justify-content:center;
-        }
-
-        /* Title */
-        .result-title{
-            text-align:center;
-            font-size:38px;
-            color:#14532d;
-            margin-bottom:45px;
-        }
-
-        /* Content */
-        .result-content{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            gap:60px;
-            flex-wrap:wrap;
-        }
-
-        /* Left Text */
-        .result-text{
-            flex:1;
-        }
-        .result-text p{
-            font-size:28px;
-            color:#222;
-            margin-bottom:12px;
-        }
-        .result-text span{
-            color:#14532d;
-            font-weight:bold;
-        }
-
-        /* Image */
-        .result-image{
-            width:320px;
-            height:320px;
-            background:#d1d5db;
-            border-radius:15px;
-            overflow:hidden;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-        }
-
-        .result-image img{
-            width:100%;
-            height:100%;
-            object-fit:cover;
-        }
-
-        /* RESPONSIVE  */
-        @media(max-width:768px){
-            nav{
-                flex-direction:column;
-                gap:20px;
-            }
-            .card,
-            .result-card{
-                padding:25px;
-            }
-            .container h1{
-                font-size:30px;
-            }
-            .upload-box{
-                min-height:230px;
-                padding:25px;
-            }
-            .upload-box h2{
-                font-size:18px;
-            }
-            .result-content{
-                flex-direction:column;
-            }
-            .result-title{
-                font-size:28px;
-            }
-            .result-text p{
-                font-size:22px;
-            }
-            .result-image{
-                width:100%;
-                height:300px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/deteksi.css') }}">
 </head>
+
 <body>
 
-    <!-- NAVBAR  -->
-    <nav>
-        <div class="logo-area">
-            <img src="{{ url_for('static', filename='Logo Sawit.png') }}">
-            <h2>Sistem Deteksi Kematangan Sawit</h2>
-        </div>
-        <div class="menu">
-            <a href="/">Beranda</a>
-            <a href="/deteksi" class="active">Deteksi</a>
-            <a href="/tentang">Tentang</a>
-        </div>
-    </nav>
+<!-- NAVBAR -->
+<nav>
+    <div class="logo-area">
+        <img src="{{ url_for('static', filename='Logo Sawit.png') }}">
+        <h2>Sistem Deteksi Kematangan Sawit</h2>
+    </div>
 
-    <!--  CONTAINER  -->
-    <div class="container">
+    <div class="menu">
+        <a href="/">Beranda</a>
+        <a href="/deteksi" class="active">Deteksi</a>
+        <a href="/tentang">Tentang</a>
+    </div>
+</nav>
 
-        <!--  UPLOAD CARD  -->
-        <div class="card">
-            <h1>Upload Gambar Sawit</h1>
-            <div class="upload-box">
+<!-- CONTAINER -->
+<div class="container">
+    <h1>Deteksi Kematangan Sawit</h1>
 
-                <!-- Icon -->
-                <div class="upload-icon">
-                    ⬆
-                </div>
+    <!-- UPLOAD CARD -->
+    <div class="main-card">
 
-                <!-- Text -->
-                <h2>
-                    Unggah gambar buah kelapa sawit
-                    untuk mendeteksi tingkat kematangannya
-                </h2>
-                <p>
-                    Format: JPG, PNG — maks. 5 MB
-                </p>
+        <form id="detectForm">
 
-                <!-- Input File -->
-                <input
-                    type="file"
-                    id="imageInput"
-                    accept="image/*"
-                >
+            <div class="upload-section">
 
-                <!-- Upload Button -->
-                <label
-                    for="imageInput"
-                    class="upload-btn"
-                    id="uploadLabel"
-                >
-                    Unggah Gambar
-                </label>
+                <div class="upload-icon">📁</div>
 
-                <!-- Preview Nama File -->
-                <div
-                    class="file-preview"
-                    id="filePreview"
-                >
-                    <span
-                        class="file-name"
-                        id="fileName"
-                    >
-                    </span>
+                <h3>Upload Gambar Sawit</h3>
 
-                    <!-- Remove -->
-                    <button
-                        class="remove-btn"
-                        onclick="removeImage()"
-                    >
-                        ×
-                    </button>
-                </div>
+                <p>Pilih gambar untuk dianalisis</p>
 
-                <!-- Detect Button -->
-                <button
-                    class="detect-btn"
-                    id="detectBtn"
-                    onclick="detectImage()"
-                >
-                    Deteksi Sekarang
+                <input type="file" id="fileInput" class="file-input" accept="image/*">
+
+                <button type="button" class="upload-btn"
+                    onclick="document.getElementById('fileInput').click()">
+                    Pilih Gambar
                 </button>
+
+                <!-- FILE INFO -->
+                <div class="file-info" id="fileInfo">
+
+                    <button type="button" class="remove-btn" onclick="removeFile()">×</button>
+
+                    <p class="file-detail">
+                        <b>File:</b> <span id="fileName"></span>
+                    </p>
+
+                    <p class="file-detail">
+                        <b>Ukuran:</b> <span id="fileSize"></span>
+                    </p>
+
+                    <img id="previewImage" class="preview-image">
+
+                </div>
+
             </div>
+
+            <button type="submit" class="predict-btn">
+                Mulai Analisis
+            </button>
+
+        </form>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-card" id="resultCard" style="display:none;">
+
+        <h2 class="result-title">Hasil Analisis</h2>
+
+        <!-- TOP GRID -->
+        <div class="result-grid-top">
+
+        <!-- KIRI: GAMBAR -->
+        <div class="inside-card image-card">
+
+            <!-- JUDUL (CENTER STYLE) -->
+            <h3 class="section-title">Gambar Sawit</h3>
+
+            <img id="resultImage" class="uploaded-image">
+
         </div>
 
-        <!--  RESULT CARD -->
-        <div
-            class="result-card"
-            id="result"
-        >
-            <h2 class="result-title">
-                Hasil Deteksi Tingkat Kematangan
-            </h2>
-            <div class="result-content">
+            <!-- KANAN: INFO -->
+            <div class="inside-card info-card">
 
-                <!-- Text -->
-                <div class="result-text">
-                    <p> Status: </p>
-                    <p> <span id="hasil"></span> </p>
-                    <br>
+                <!-- JUDUL TENGAH -->
+                <h3 class="info-title">Informasi Kematangan</h3>
 
-                    <p> Confidence: </p>
-                    <p> <span id="confidence"></span> </p>
-                    <br>
+                <div class="prediction-box">
 
-                    <p> Keterangan: </p>
-                    <p> <span id="deskripsi"></span> </p>
+                    <div class="prediction-icon">🌴</div>
+
+                    <div class="prediction-text" id="hasil"></div>
+
+                    <div class="confidence-text" id="confidence"></div>
+
                 </div>
 
-                <!-- Image -->
-                <div class="result-image">
-                    <img id="preview">
-                </div>
             </div>
+
+        </div>
+
+        <!-- KETERANGAN (NO CARD) -->
+        <div class="description-section">
+
+            <h3 class="desc-title">Keterangan</h3>
+
+            <p id="deskripsi" class="desc-text"></p>
+
         </div>
     </div>
 
-    <!--  JAVASCRIPT  -->
-    <script>
-        const imageInput =
-        document.getElementById('imageInput')
+    <!-- CARD GLCM -->
+    <div class="glcm-card" id="glcmCard" style="display:none;">
 
-        const uploadLabel =
-        document.getElementById('uploadLabel')
+        <h2 class="glcm-main-title">
+            Analisis Fitur Ekstraksi GLCM
+        </h2>
 
-        const filePreview =
-        document.getElementById('filePreview')
+        <div class="glcm-grid">
 
-        const fileName =
-        document.getElementById('fileName')
+            <div class="glcm-item">
+                <span class="glcm-label">Contrast</span>
+                <span class="glcm-value" id="contrast"></span>
+            </div>
 
-        const detectBtn =
-        document.getElementById('detectBtn')
+            <div class="glcm-item">
+                <span class="glcm-label">Dissimilarity</span>
+                <span class="glcm-value" id="dissimilarity"></span>
+            </div>
 
-        /*  UPLOAD IMAGE  */
-        imageInput.addEventListener('change', function(){
-            const file = this.files[0]
-            if(file){
+            <div class="glcm-item">
+                <span class="glcm-label">Homogeneity</span>
+                <span class="glcm-value" id="homogeneity"></span>
+            </div>
 
-                /* tampilkan nama file */
-                fileName.innerHTML = file.name
+            <div class="glcm-item">
+                <span class="glcm-label">Energy</span>
+                <span class="glcm-value" id="energy"></span>
+            </div>
 
-                /* tampilkan preview file */
-                filePreview.style.display = 'flex'
+            <div class="glcm-item">
+                <span class="glcm-label">Correlation</span>
+                <span class="glcm-value" id="correlation"></span>
+            </div>
 
-                /* hilangkan tombol upload */
-                uploadLabel.style.display = 'none'
+            <div class="glcm-item">
+                <span class="glcm-label">ASM (Angular Second Moment)</span>
+                <span class="glcm-value" id="asm"></span>
+            </div>
+        </div>
 
-                /* tampilkan tombol deteksi */
-                detectBtn.style.display = 'inline-block'
-            }
+         <!-- Penjelasan GLCM -->
+        <div class="glcm-info">
+
+            <h3 class="glcm-desc-title">
+                Keterangan
+            </h3>
+
+            <div class="glcm-desc-box">
+
+                <p>
+                    <b>Contrast: </b>
+                    Mengukur perbedaan intensitas antar pixel. Nilai tinggi menunjukkan tekstur lebih beragam.
+                </p>
+
+                 <p>
+                    <b>Dissimilarity: </b>
+                    Mengukur tingkat ketidakmiripan antar pixel. Nilai tinggi menunjukkan tekstur lebih kompleks.
+                </p>
+
+                <p>
+                    <b>Homogeneity: </b>
+                    Mengukur tingkat keseragaman tekstur. Nilai tinggi menunjukkan tekstur lebih homogen.
+                </p>
+
+                <p>
+                    <b>Energy: </b>
+                    Mengukur keteraturan pola tekstur. Nilai tinggi menunjukkan pola lebih konsisten.
+                </p>
+
+                <p>
+                    <b>Correlation: </b>
+                    Mengukur hubungan antar pixel bertetangga. Nilai tinggi menunjukkan hubungan yang kuat.
+                </p>
+
+                <p>
+                    <b>ASM (Angular Second Moment): </b>
+                    Mengukur kestabilan dan keseragaman tekstur. Nilai tinggi menunjukkan tekstur lebih terstruktur.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+
+const fileInput = document.getElementById("fileInput")
+const fileInfo = document.getElementById("fileInfo")
+const fileName = document.getElementById("fileName")
+const fileSize = document.getElementById("fileSize")
+const previewImage = document.getElementById("previewImage")
+
+const resultCard = document.getElementById("resultCard")
+const resultImage = document.getElementById("resultImage")
+
+// CARD GLCM
+const glcmCard = document.getElementById("glcmCard")
+
+// PREVIEW FILE
+fileInput.addEventListener("change", function(){
+
+    const file = this.files[0]
+
+    if(file){
+        fileName.textContent = file.name
+        fileSize.textContent = (file.size / 1024 / 1024).toFixed(2) + " MB"
+        previewImage.src = URL.createObjectURL(file)
+        fileInfo.style.display = "block"
+    }
+})
+
+// REMOVE FILE
+function removeFile(){
+    fileInput.value = ""
+    fileInfo.style.display = "none"
+}
+
+// DETEKSI
+document.getElementById("detectForm")
+.addEventListener("submit", function(e){
+
+    e.preventDefault()
+
+    let file = fileInput.files[0]
+
+    if(!file){
+        alert("Pilih gambar terlebih dahulu")
+        return
+    }
+
+    let formData = new FormData()
+    formData.append("file", file)
+
+    fetch("/deteksi", {
+        method: "POST",
+        body: formData
+    })
+
+    .then(res => res.json())
+    .then(data => {
+
+        // TAMPILKAN CARD
+        resultCard.style.display = "block"
+        glcmCard.style.display = "block"
+
+        resultImage.src = URL.createObjectURL(file)
+
+        // HASIL DETEKSI
+        document.getElementById("hasil").textContent =
+            data.hasil
+
+        document.getElementById("confidence").textContent =
+            "Confidence: " + data.confidence + "%"
+
+        document.getElementById("deskripsi").textContent =
+            data.deskripsi
+
+        // GLCM
+        document.getElementById("contrast").textContent =
+            data.glcm.contrast
+
+        document.getElementById("dissimilarity").textContent =
+            data.glcm.dissimilarity
+
+        document.getElementById("homogeneity").textContent =
+            data.glcm.homogeneity
+
+        document.getElementById("energy").textContent =
+            data.glcm.energy
+
+        document.getElementById("correlation").textContent =
+            data.glcm.correlation
+
+        document.getElementById("asm").textContent =
+            data.glcm.asm
+
+        resultCard.scrollIntoView({
+            behavior: "smooth"
         })
 
-        /* REMOVE IMAGE */
-        function removeImage(){
-            imageInput.value = ''
-            filePreview.style.display = 'none'
-            uploadLabel.style.display = 'inline-block'
-            detectBtn.style.display = 'none'
-            document.getElementById('result').style.display = 'none'
-        }
+        // RESET UPLOAD
+        fileInput.value = ""
+        fileInfo.style.display = "none"
 
-        /*  DETECT IMAGE */
-        function detectImage(){
-            let file = imageInput.files[0]
-            if(!file){
-                alert('Pilih gambar terlebih dahulu')
-                return
-            }
-            let formData = new FormData()
-            formData.append('file', file)
-            fetch('/deteksi', {
-                method:'POST',
-                body:formData
-            })
-            .then(response => response.json())
-            .then(data => {
+    })
 
-                /* tampilkan hasil */
-                document.getElementById('result').style.display = 'block'
+    .catch(error => {
 
-                /* preview image */
-                document.getElementById('preview').src =
-                URL.createObjectURL(file)
+        console.error(error)
 
-                /* hasil klasifikasi */
-                document.getElementById('hasil').innerHTML =
-                data.hasil
+        alert(
+            "Terjadi kesalahan saat melakukan deteksi."
+        )
 
-                /* confidence */
-                document.getElementById('confidence').innerHTML =
-                data.confidence + '%'
+    })
 
-                /* deskripsi */
-                document.getElementById('deskripsi').innerHTML =
-                data.deskripsi
+})
 
-                /* scroll ke hasil */
-                document.getElementById('result')
-                .scrollIntoView({
-                    behavior:'smooth'
-                })
-            })
-        }
-    </script>
+</script>
+
 </body>
 </html>
