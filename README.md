@@ -1,15 +1,15 @@
 # Deteksi Kematangan Buah Sawit
 
-Aplikasi berbasis Flask untuk mendeteksi tingkat kematangan buah kelapa sawit menggunakan metode Convolutional Neural Network (CNN) MobileNetV2 dengan proporsi data 80:10:10.
+Aplikasi berbasis Flask untuk mendeteksi tingkat kematangan buah kelapa sawit menggunakan metode Convolutional Neural Network (CNN) dan fitur Gray-Level Co-occurrence Matrix (GLCM).
 
 ## Akses Google Colab
 
-https://colab.research.google.com/drive/1W32yYUe0syNhct5xNKnOdqEsPPOr7Qba?usp=drive_link
+https://colab.research.google.com/drive/1lv5QY1_I50flqK0sJed-GTP02aHZ6Hh7?usp=sharing
 
 ## Fitur
 - Upload gambar buah sawit
 - Deteksi tingkat kematangan otomatis
-- Menampilkan confidence prediksi
+- Menampilkan confidence prediksi dan fitur GLCM
 - Tampilan website menggunakan HTML, CSS, dan JavaScript
 
 ## Teknologi
