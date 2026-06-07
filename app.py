@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
-from tensorflow.keras.models import load_model # type: ignore
-from tensorflow.keras.applications.mobilenet_v2 import preprocess_input # type: ignore
+from tensorflow.keras.models import load_model  # type: ignore
+from tensorflow.keras.applications.mobilenet_v2 import preprocess_input  # type: ignore
 from PIL import Image
 import numpy as np
 import cv2
@@ -13,41 +13,50 @@ from skimage import img_as_ubyte
 app = Flask(__name__)
 
 # LOAD MODEL DAN SCALER
-model = load_model(
-    'best_hybrid_model.h5'
-)
+MODEL_PATH = "mobilenetv2_glcm_hybrid.h5"
+SCALER_PATH = "glcm_scaler.pkl"
 
-scaler = joblib.load(
-    'glcm_scaler.pkl'
-)
+try:
+    model = load_model(MODEL_PATH)
+    print("Model berhasil dimuat")
+except Exception as e:
+    print(f"Gagal memuat model: {e}")
+    raise
+
+try:
+    scaler = joblib.load(SCALER_PATH)
+    print("Scaler berhasil dimuat")
+except Exception as e:
+    print(f"Gagal memuat scaler: {e}")
+    raise
 
 # KONFIGURASI
 IMAGE_SIZE = 224
-THRESHOLD = 0.75
+
 CLASS_NAMES = [
-    'Belum Masak',
-    'Masak',
-    'Non Sawit',
-    'Terlalu Masak'
+    "Belum Masak",
+    "Masak",
+    "Non Sawit",
+    "Terlalu Masak"
 ]
 
-# DESKRIPSI
+# DESKRIPSI KELAS
 CLASS_DESCRIPTIONS = {
 
-    'Belum Masak':
-    'Buah kelapa sawit masih dalam kondisi mentah dengan warna dominan ungu atau hitam pekat. Kandungan minyak pada buah belum optimal sehingga belum direkomendasikan untuk dipanen.',
+    "Belum Masak":
+    "Buah kelapa sawit masih dalam kondisi mentah dengan warna dominan ungu atau hitam pekat. Kandungan minyak pada buah belum optimal sehingga belum direkomendasikan untuk dipanen.",
 
-    'Masak':
-    'Buah kelapa sawit berada pada tingkat kematangan optimal dengan warna merah jingga merata. Kondisi ini menunjukkan buah siap dipanen karena kandungan minyaknya sudah maksimal.',
+    "Masak":
+    "Buah kelapa sawit berada pada tingkat kematangan optimal dengan warna merah jingga merata. Kondisi ini menunjukkan buah siap dipanen karena kandungan minyaknya sudah maksimal.",
 
-    'Non Sawit':
-    'Gambar yang diunggah tidak teridentifikasi sebagai buah kelapa sawit. Silakan unggah gambar buah kelapa sawit yang jelas agar sistem dapat melakukan deteksi dengan benar.',
+    "Non Sawit":
+    "Gambar yang diunggah tidak teridentifikasi sebagai buah kelapa sawit. Silakan unggah gambar buah kelapa sawit yang jelas agar sistem dapat melakukan deteksi dengan benar.",
 
-    'Terlalu Masak':
-    'Buah kelapa sawit terdeteksi dalam kondisi terlalu matang dengan warna cenderung gelap dan banyak brondolan yang mulai lepas. Kondisi ini dapat menurunkan kualitas hasil panen dan kandungan minyak.'
+    "Terlalu Masak":
+    "Buah kelapa sawit terdeteksi dalam kondisi terlalu matang dengan warna cenderung gelap dan banyak brondolan yang mulai lepas. Kondisi ini dapat menurunkan kualitas hasil panen dan kandungan minyak."
 }
 
-# PREPROCESS IMAGE CNN
+# PREPROCESS CNN
 def preprocess_image(img):
 
     img = img.resize(
@@ -55,6 +64,12 @@ def preprocess_image(img):
     )
 
     img_array = np.array(img)
+
+    if len(img_array.shape) == 2:
+        img_array = np.stack(
+            (img_array,) * 3,
+            axis=-1
+        )
 
     if img_array.shape[-1] == 4:
         img_array = img_array[:, :, :3]
@@ -73,7 +88,6 @@ def preprocess_image(img):
     )
 
     return img_array
-
 
 # EKSTRAKSI GLCM
 def extract_glcm_features(img_rgb):
@@ -100,32 +114,32 @@ def extract_glcm_features(img_rgb):
 
     contrast = graycoprops(
         glcm,
-        'contrast'
+        "contrast"
     ).mean()
 
     dissimilarity = graycoprops(
         glcm,
-        'dissimilarity'
+        "dissimilarity"
     ).mean()
 
     homogeneity = graycoprops(
         glcm,
-        'homogeneity'
+        "homogeneity"
     ).mean()
 
     energy = graycoprops(
         glcm,
-        'energy'
+        "energy"
     ).mean()
 
     correlation = graycoprops(
         glcm,
-        'correlation'
+        "correlation"
     ).mean()
 
     asm = graycoprops(
         glcm,
-        'ASM'
+        "ASM"
     ).mean()
 
     return np.array([
@@ -137,56 +151,51 @@ def extract_glcm_features(img_rgb):
         asm
     ])
 
-
-# HALAMAN BERANDA
-@app.route('/')
+# HALAMAN UTAMA
+@app.route("/")
 def index():
 
     return render_template(
-        'index.html'
+        "index.html"
     )
 
-
 # HALAMAN TENTANG
-@app.route('/tentang')
+@app.route("/tentang")
 def tentang():
 
     return render_template(
-        'tentang.html'
+        "tentang.html"
     )
-
 
 # HALAMAN DETEKSI
 @app.route(
-    '/deteksi',
-    methods=['GET', 'POST']
+    "/deteksi",
+    methods=["GET", "POST"]
 )
 def deteksi():
 
-    if request.method == 'POST':
+    if request.method == "POST":
 
-        if 'file' not in request.files:
-
+        if "file" not in request.files:
             return jsonify({
-                'error':
-                'Tidak ada file'
+                "error":
+                "Tidak ada file yang diunggah"
             })
 
-        file = request.files['file']
+        file = request.files["file"]
 
-        if file.filename == '':
-
+        if file.filename == "":
             return jsonify({
-                'error':
-                'File kosong'
+                "error":
+                "File kosong"
             })
 
         try:
 
-            # LOAD IMAGE
+            # LOAD GAMBAR
             img = Image.open(
                 file.stream
-            ).convert('RGB')
+            ).convert("RGB")
 
             # INPUT CNN
             img_array = preprocess_image(
@@ -211,16 +220,12 @@ def deteksi():
                 [
                     img_array,
                     glcm_feature
-                ]
+                ],
+                verbose=0
             )
 
-            print("\n====================")
-            print("HASIL PREDIKSI")
-            print(prediction)
-            print("====================\n")
-
-            predicted_class = np.argmax(
-                prediction
+            predicted_class = int(
+                np.argmax(prediction)
             )
 
             confidence = float(
@@ -231,77 +236,85 @@ def deteksi():
                 predicted_class
             ]
 
-            # Threshold opsional
-            if confidence < THRESHOLD:
-
-                hasil = 'Non Sawit'
-
             deskripsi = CLASS_DESCRIPTIONS[
                 hasil
             ]
 
-            print(
-                "Kelas:",
-                hasil
-            )
-
-            print(
-                "Confidence:",
-                confidence
-            )
+            print("\n========== HASIL ==========")
+            print("Probabilitas :", prediction)
+            print("Kelas        :", hasil)
+            print("Confidence   :", confidence)
+            print("===========================\n")
 
             return jsonify({
 
-                'hasil':
+                "hasil":
                 hasil,
 
-                'confidence':
+                "confidence":
                 round(
                     confidence * 100,
                     2
                 ),
 
-                'deskripsi':
+                "deskripsi":
                 deskripsi,
 
-                'glcm': {
+                "glcm": {
 
-                    'contrast':
-                    round(float(glcm_feature_original[0]),4),
+                    "contrast":
+                    round(
+                        float(glcm_feature_original[0]),
+                        4
+                    ),
 
-                    'dissimilarity':
-                    round(float(glcm_feature_original[1]),4),
+                    "dissimilarity":
+                    round(
+                        float(glcm_feature_original[1]),
+                        4
+                    ),
 
-                    'homogeneity':
-                    round(float(glcm_feature_original[2]),4),
+                    "homogeneity":
+                    round(
+                        float(glcm_feature_original[2]),
+                        4
+                    ),
 
-                    'energy':
-                    round(float(glcm_feature_original[3]),4),
+                    "energy":
+                    round(
+                        float(glcm_feature_original[3]),
+                        4
+                    ),
 
-                    'correlation':
-                    round(float(glcm_feature_original[4]),4),
+                    "correlation":
+                    round(
+                        float(glcm_feature_original[4]),
+                        4
+                    ),
 
-                    'asm':
-                    round(float(glcm_feature_original[5]),4)
-
+                    "asm":
+                    round(
+                        float(glcm_feature_original[5]),
+                        4
+                    )
                 }
-
             })
 
         except Exception as e:
 
+            print("ERROR :", str(e))
+
             return jsonify({
-                'error':
+                "error":
                 str(e)
             })
 
     return render_template(
-        'deteksi.html'
+        "deteksi.html"
     )
 
-
 # RUN FLASK
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     app.run(
         debug=True

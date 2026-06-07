@@ -2,7 +2,7 @@
 
 Aplikasi berbasis Flask untuk mendeteksi tingkat kematangan buah kelapa sawit menggunakan metode Convolutional Neural Network (CNN) dan fitur Gray-Level Co-occurrence Matrix (GLCM).
 
-## Download file h5 dan pkl
+## Download File h5 dan pkl
 
 https://drive.google.com/drive/folders/1jZd38I6c8T4sub0IgQpqgUTjqKMpHne1?usp=drive_link
 

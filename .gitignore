@@ -2,5 +2,5 @@ __pycache__/
 *.pyc
 .env
 venv/
-best_hybrid_model.h5
+mobilenetv2_glcm_hybrid.h5
 glcm_scaler.pkl
